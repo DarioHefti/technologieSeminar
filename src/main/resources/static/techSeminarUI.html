@@ -10,9 +10,8 @@
 <input id="name">name</input>
 <input id="surname">surname</input>
 <input type="password" id="pw" name="pw">Password</input>
-<p id="test">Result</p>
-<button onclick="sendData()">Send Data
-</button>
+<p id="result">Result</p>
+<button onclick="sendData()">Send Data</button>
 
 <script>function sendData(){
 		var name = document.getElementById("name").value;
@@ -23,16 +22,12 @@
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-		document.getElementById("test").innerHTML =xhr.responseText;
-		}else{
-		console.log(xhr.status);
-		console.log(xhr.responseText);
-		}
-		};
-		var data = JSON.stringify({"id":0,"name":name,"surname":surname,"pw":pw});
-		console.log(data);
+		document.getElementById("result").innerHTML = JSON.parse(xhr.responseText);
+		}};
+		var data = JSON.stringify({"name":name,"surname":surname,"pw":pw});
 		xhr.send(data);
 		}
+
 </script>
 </body>
 </html>
