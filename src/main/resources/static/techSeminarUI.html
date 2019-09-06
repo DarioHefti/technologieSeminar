@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>test</title>
+</head>
+<body>
+<h1 id="title">TechSeminar Fibu</h1>
+<input id="name">name</input>
+<input id="surname">surname</input>
+<input type="password" id="pw" name="pw">Password</input>
+<p id="test">Result</p>
+<button onclick="sendData()">Send Data
+</button>
+
+<script>function sendData(){
+		var name = document.getElementById("name").value;
+		var surname = document.getElementById("surname").value;
+		var pw = document.getElementById("pw").value;
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "http://localhost:8080/users", true);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+		document.getElementById("test").innerHTML =xhr.responseText;
+		}else{
+		console.log(xhr.status);
+		console.log(xhr.responseText);
+		}
+		};
+		var data = JSON.stringify({"id":0,"name":name,"surname":surname,"pw":pw});
+		console.log(data);
+		xhr.send(data);
+		}
+</script>
+</body>
+</html>

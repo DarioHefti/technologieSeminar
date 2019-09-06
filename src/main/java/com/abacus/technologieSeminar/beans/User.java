@@ -26,7 +26,7 @@ public class User {
   private long id;
   private String name;
   private String surname;
-  private byte[] pw;
+  private String pw;
 //  @ManyToOne
 //  private Adress adress;
 
@@ -57,11 +57,11 @@ public class User {
     this.surname = surname;
   }
 
-  public byte[] getPw() {
+  public String getPw() {
     return pw;
   }
 
-  public void setPw(byte[] pw) {
+  public void setPw(String pw) {
     this.pw = pw;
   }
 
