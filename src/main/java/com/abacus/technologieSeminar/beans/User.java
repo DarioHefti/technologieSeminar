@@ -14,9 +14,7 @@
  */
 package com.abacus.technologieSeminar.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -27,8 +25,9 @@ public class User {
   private String name;
   private String surname;
   private String pw;
-//  @ManyToOne
-//  private Adress adress;
+  @ManyToOne
+  @JoinColumn(name="adress_id")
+  private Adress adress;
 
   public User() {
   }
