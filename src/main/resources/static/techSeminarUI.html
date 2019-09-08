@@ -66,6 +66,19 @@
 </div>
 <div class="spacing"></div>
 <div>
+    <input id="findByName">name</input>
+    <button onclick="findUsersByName()">Find Users by Name</button>
+    <p id="findByNameResult">Result</p>
+</div>
+<div class="spacing"></div>
+<div>
+    <input id="findBySurname">surname</input>
+    <button onclick="findUsersBySurname()">Find Users by Surname</button>
+    <p id="findBySurnameResult">Result</p>
+</div>
+
+<div class="spacing"></div>
+<div>
     <button onclick="getAdresses()">Get Adresses</button>
     <p id="resultAdresses">Result</p>
 </div>
@@ -137,6 +150,28 @@
         xhttp.open("PUT", baseUrl+"users/"+userNumber+"/adress", true);
         xhttp.setRequestHeader("Content-Type","text/uri-list");
         xhttp.send(adressLink);
+        }
+
+        function findUsersByName(){
+        var name = document.getElementById("findByName").value
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("findByNameResult").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
+         }};
+        xhttp.open("GET", baseUrl+"users/search/findByName?name="+name, true);
+        xhttp.send();
+        }
+
+        function findUsersBySurname(){
+        var surname = document.getElementById("findBySurname").value
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("findBySurnameResult").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
+         }};
+        xhttp.open("GET", baseUrl+"users/search/findBySurname?surname="+surname, true);
+        xhttp.send();
         }
 
 </script>
