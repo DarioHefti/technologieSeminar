@@ -72,12 +72,13 @@
 
 
 <script>
+        let baseUrl = "http://localhost:8080/";
         function sendUserData(){
 		var name = document.getElementById("name").value;
 		var surname = document.getElementById("surname").value;
 		var pw = document.getElementById("pw").value;
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://localhost:8080/users", true);
+		xhr.open("POST", baseUrl+"users", true);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
@@ -94,7 +95,7 @@
          if (this.readyState == 4 && this.status == 200) {
         document.getElementById("resultUsers").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
          }};
-        xhttp.open("GET", "http://localhost:8080/users", true);
+        xhttp.open("GET", baseUrl+"users", true);
         xhttp.send();
 		}
 
@@ -105,7 +106,7 @@
 		var postCode = document.getElementById("postCode").value;
         var city = document.getElementById("city").value;
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://localhost:8080/adresses", true);
+		xhr.open("POST", baseUrl+"adresses", true);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
@@ -121,7 +122,7 @@
          if (this.readyState == 4 && this.status == 200) {
         document.getElementById("resultAdresses").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
          }};
-        xhttp.open("GET", "http://localhost:8080/adresses", true);
+        xhttp.open("GET", baseUrl+"adresses", true);
         xhttp.send();
 		}
 
@@ -133,7 +134,7 @@
          if (this.readyState == 4 && this.status == 200) {
         console.log(xhttp.responseText);
          }};
-        xhttp.open("PUT", "http://localhost:8080/users/"+userNumber+"/adress", true);
+        xhttp.open("PUT", baseUrl+"users/"+userNumber+"/adress", true);
         xhttp.setRequestHeader("Content-Type","text/uri-list");
         xhttp.send(adressLink);
         }
