@@ -4,29 +4,175 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>test</title>
+    <style>
+    body{
+    font-family: 'Arial';
+    color: black;
+    font-style: normal;
+    font-weight: 400;
+    margin:0;
+    padding: 0;
+	width:100%;
+	height:100vh;
+    background:#ffffff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+    }
+    .spacing{
+    height:10px;
+    }
+
+</style>
 </head>
 <body>
 <h1 id="title">TechSeminar Fibu</h1>
-<input id="name">name</input>
-<input id="surname">surname</input>
-<input type="password" id="pw" name="pw">Password</input>
-<p id="result">Result</p>
-<button onclick="sendData()">Send Data</button>
+<div>
+    <h2>Users</h2>
+    <input id="name">name</input>
+    <input id="surname">surname</input>
+    <input type="password" id="pw" name="pw">Password</input>
+</div>
+<div class="spacing"></div>
+<div>
+    <button onclick="sendUserData()">Send UserData</button>
+</div>
+<div>
+    <h2>Adress</h2>
+    <input id="street">street</input>
+    <input id="houseNumber">houseNumber</input>
+    <input id="postCode">postCode</input>
+    <input id="city">city</input>
+</div>
+<div class="spacing"></div>
+<div>
+    <button onclick="sendAdressData()">Send AdressData</button>
+</div>
+<div>
+    <h2>Link User to Adress</h2>
+    <input id="userNumber">userNumber</input>
+    <input id="adressLink">adressLink</input>
+</div>
+<div class="spacing"></div>
+<div>
+    <button onclick="linkThem()">Link them</button>
+</div>
 
-<script>function sendData(){
+<div class="spacing"></div>
+<div class="spacing"></div>
+<div>
+    <button onclick="getUsers()">Get Users</button>
+    <p id="resultUsers">Result</p>
+</div>
+<div class="spacing"></div>
+<div>
+    <input id="findByName">name</input>
+    <button onclick="findUsersByName()">Find Users by Name</button>
+    <p id="findByNameResult">Result</p>
+</div>
+<div class="spacing"></div>
+<div>
+    <input id="findBySurname">surname</input>
+    <button onclick="findUsersBySurname()">Find Users by Surname</button>
+    <p id="findBySurnameResult">Result</p>
+</div>
+
+<div class="spacing"></div>
+<div>
+    <button onclick="getAdresses()">Get Adresses</button>
+    <p id="resultAdresses">Result</p>
+</div>
+
+
+<script>
+        let baseUrl = "http://localhost:8080/";
+        function sendUserData(){
 		var name = document.getElementById("name").value;
 		var surname = document.getElementById("surname").value;
 		var pw = document.getElementById("pw").value;
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://localhost:8080/users", true);
+		xhr.open("POST", baseUrl+"users", true);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-		document.getElementById("result").innerHTML = JSON.parse(xhr.responseText);
+		console.log(JSON.parse(xhr.responseText));
 		}};
 		var data = JSON.stringify({"name":name,"surname":surname,"pw":pw});
 		xhr.send(data);
 		}
+
+
+		function getUsers(){
+		var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("resultUsers").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
+         }};
+        xhttp.open("GET", baseUrl+"users", true);
+        xhttp.send();
+		}
+
+
+        function sendAdressData(){
+        var street = document.getElementById("street").value;
+		var houseNumber = document.getElementById("houseNumber").value;
+		var postCode = document.getElementById("postCode").value;
+        var city = document.getElementById("city").value;
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", baseUrl+"adresses", true);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+		console.log(JSON.parse(xhr.responseText));
+		}};
+		var data = JSON.stringify({"street":street,"houseNumber":houseNumber,"postCode":postCode,"city":city});
+		xhr.send(data);
+        }
+
+        function getAdresses(){
+		var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("resultAdresses").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
+         }};
+        xhttp.open("GET", baseUrl+"adresses", true);
+        xhttp.send();
+		}
+
+        function linkThem(){
+        var userNumber = document.getElementById("userNumber").value;
+        var adressLink = document.getElementById("adressLink").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        console.log(xhttp.responseText);
+         }};
+        xhttp.open("PUT", baseUrl+"users/"+userNumber+"/adress", true);
+        xhttp.setRequestHeader("Content-Type","text/uri-list");
+        xhttp.send(adressLink);
+        }
+
+        function findUsersByName(){
+        var name = document.getElementById("findByName").value
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("findByNameResult").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
+         }};
+        xhttp.open("GET", baseUrl+"users/search/findByName?name="+name, true);
+        xhttp.send();
+        }
+
+        function findUsersBySurname(){
+        var surname = document.getElementById("findBySurname").value
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("findBySurnameResult").innerHTML = "<BR><textarea rows='40' cols='80'>" + xhttp.responseText + "</textarea>";
+         }};
+        xhttp.open("GET", baseUrl+"users/search/findBySurname?surname="+surname, true);
+        xhttp.send();
+        }
 
 </script>
 </body>

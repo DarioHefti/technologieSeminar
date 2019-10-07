@@ -1,0 +1,5 @@
+Post
+
+
+Link them together
+curl -i -X PUT -H "Content-Type:text/uri-list" -d "http://localhost:8080/adresses/2" http://localhost:8080/users/1/adress
